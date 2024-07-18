@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/hobbies")
+@RequestMapping("/api/hobbies")
 public class HobbyController {
 
     @Autowired
@@ -41,7 +41,7 @@ public class HobbyController {
         Optional<Hobby> hobby = hobbyRepository.findById(id);
         if (hobby.isPresent()) {
             Hobby hobbyToUpdate = hobby.get();
-            hobbyToUpdate.setLibelle(hobbyDetails.getLibelle());
+            hobbyToUpdate.setLabel(hobbyDetails.getLabel());
             hobbyToUpdate.setCategory(hobbyDetails.getCategory());
             Hobby updatedHobby = hobbyRepository.save(hobbyToUpdate);
             return ResponseEntity.ok(updatedHobby);

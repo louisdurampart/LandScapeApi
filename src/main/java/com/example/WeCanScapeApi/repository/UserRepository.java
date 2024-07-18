@@ -1,7 +1,11 @@
 package com.example.WeCanScapeApi.repository;
 
 import com.example.WeCanScapeApi.modele.User;
+
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
+	Optional<User> findByUId(String uId);
 }

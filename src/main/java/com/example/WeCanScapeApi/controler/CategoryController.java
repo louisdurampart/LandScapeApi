@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+
 @RestController
-@RequestMapping("/categories")
+@RequestMapping("/api/categories")
 public class CategoryController {
 
     @Autowired
@@ -30,6 +31,7 @@ public class CategoryController {
             return ResponseEntity.notFound().build();
         }
     }
+
 
     @PostMapping
     public Category createCategory(@RequestBody Category category) {

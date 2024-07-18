@@ -29,11 +29,77 @@ public class History {
     private Date date;
 
     // Informations de départ et d'arrivée de l'historique
-    private String latitude_depart;
-    private String latitude_arrive;
-    private String longitude_depart;
-    private String longitude_arrive;
+    private String laStart;
+    private String laEnd;
+    private String loStart;
+    private String loEnd;
 
     @OneToMany(mappedBy = "history")
     private List<Waypoint> waypoints;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public String getLaStart() {
+		return laStart;
+	}
+
+	public void setLaStart(String la_start) {
+		this.laStart = la_start;
+	}
+
+	public String getLaEnd() {
+		return laEnd;
+	}
+
+	public void setLaEnd(String la_end) {
+		this.laEnd = la_end;
+	}
+
+	public String getLoStart() {
+		return loStart;
+	}
+
+	public void setLoStart(String lo_start) {
+		this.loStart = lo_start;
+	}
+
+	public String getLoEnd() {
+		return loEnd;
+	}
+
+	public void setLoEnd(String lo_end) {
+		this.loEnd = lo_end;
+	}
+
+	public List<Waypoint> getWaypoints() {
+		return waypoints;
+	}
+
+	public void setWaypoints(List<Waypoint> waypoints) {
+		this.waypoints = waypoints;
+	}
+    
+    
 }

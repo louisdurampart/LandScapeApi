@@ -45,9 +45,9 @@ public class WaypointController {
         Optional<Waypoint> waypoint = waypointRepository.findById(id);
         if (waypoint.isPresent()) {
             Waypoint updatedWaypoint = waypoint.get();
-            updatedWaypoint.setNumber_waypoint(waypointDetails.getNumber_waypoint());
-            updatedWaypoint.setLatitude(waypointDetails.getLatitude());
-            updatedWaypoint.setLongitude(waypointDetails.getLongitude());
+            updatedWaypoint.setNumberWaypoint(waypointDetails.getNumberWaypoint());
+            updatedWaypoint.setLa(waypointDetails.getLa());
+            updatedWaypoint.setLo(waypointDetails.getLo());
             updatedWaypoint.setHistory(waypointDetails.getHistory());
             waypointRepository.save(updatedWaypoint);
             return new ResponseEntity<>(updatedWaypoint, HttpStatus.OK);

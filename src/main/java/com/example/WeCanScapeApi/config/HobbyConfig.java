@@ -36,10 +36,7 @@ public class HobbyConfig {
             Category waterActivities = categories.stream().filter(c -> c.getLabel().equals("Activités aquatiques")).findFirst().orElse(null);
             Category transport = categories.stream().filter(c -> c.getLabel().equals("Transport")).findFirst().orElse(null);
             Category health = categories.stream().filter(c -> c.getLabel().equals("Santé")).findFirst().orElse(null);
-            Category education = categories.stream().filter(c -> c.getLabel().equals("Éducation")).findFirst().orElse(null);
             Category shopping = categories.stream().filter(c -> c.getLabel().equals("Shopping")).findFirst().orElse(null);
-            Category banking = categories.stream().filter(c -> c.getLabel().equals("Banques et guichets automatiques")).findFirst().orElse(null);
-            Category publicServices = categories.stream().filter(c -> c.getLabel().equals("Services publics")).findFirst().orElse(null);
             Category leisure = categories.stream().filter(c -> c.getLabel().equals("Loisirs")).findFirst().orElse(null);
             Category natureParks = categories.stream().filter(c -> c.getLabel().equals("Nature et parcs")).findFirst().orElse(null);
             Category hotels = categories.stream().filter(c -> c.getLabel().equals("Hôtels")).findFirst().orElse(null);
@@ -147,7 +144,7 @@ public class HobbyConfig {
             );
 
             for (Hobby hobby : hobbies) {
-                Optional<Hobby> existingHobby = hobbyRepository.findByLibelleAndCategory(hobby.getLibelle(), hobby.getCategory());
+                Optional<Hobby> existingHobby = hobbyRepository.findByLabelAndCategory(hobby.getLabel(), hobby.getCategory());
                 if (!existingHobby.isPresent()) {
                     hobbyRepository.save(hobby);
                 }

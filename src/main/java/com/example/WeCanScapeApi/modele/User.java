@@ -19,13 +19,74 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String nom;
-    private String prenom;
-    private Date date_naiss;
-    private String mail;
-    private String mot_de_passe;
+    private String name;
+    private String firstName;
+    private Date birthdate;
+    private String uId;
 
     @ManyToOne
     @JoinColumn(name = "id_right")
     private Right right;
+    
+    public User() {}
+    
+
+	public User(String name, String firstName, Date birthdate, String uId, Right right) {
+		super();
+		this.name = name;
+		this.firstName = firstName;
+		this.birthdate = birthdate;
+		this.uId = uId;
+		this.right = right;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public Date getBirthdate() {
+		return birthdate;
+	}
+
+	public void setBirthdate(Date birthdate) {
+		this.birthdate = birthdate;
+	}
+	
+	public Right getRight() {
+		return right;
+	}
+
+	public void setRight(Right right) {
+		this.right = right;
+	}
+
+	public String getuId() {
+		return uId;
+	}
+
+	public void setuId(String uId) {
+		this.uId = uId;
+	}
+    
+    
 }
