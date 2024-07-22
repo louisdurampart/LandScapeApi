@@ -37,29 +37,28 @@ public class Hobby {
     this.category = category;
   }
 
-public Integer getId() {
-	return id;
-}
+  public Integer getId() {
+    return id;
+  }
 
-public void setId(Integer id) {
-	this.id = id;
-}
+  public void setId(Integer id) {
+    this.id = id;
+  }
 
-public String getLabel() {
-	return label;
-}
+  public String getLabel() {
+    return label;
+  }
 
-public void setLabel(String label) {
-	this.label = label;
-}
+  public void setLabel(String label) {
+    this.label = label;
+  }
 
-public Category getCategory() {
-	return category;
-}
+  public Category getCategory() {
+    return category;
+  }
 
-public void setCategory(Category category) {
-	this.category = category;
-}
-  
-  
+  public void setCategory(Category category) {
+    this.category = category;
+  }
+
 }

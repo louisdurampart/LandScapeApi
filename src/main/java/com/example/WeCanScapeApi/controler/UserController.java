@@ -16,7 +16,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
-
 	@Autowired
 	private UserService userService;
 
@@ -28,9 +27,19 @@ public class UserController {
 		return userRepository.findAll();
 	}
 
+	// @GetMapping("/{uId}")
+	// public User getUserById(@PathVariable String uId) {
+	// 	return userRepository.findByUId(uId).orElse(null);
+	// }
+
 	@GetMapping("/{uId}")
-	public User getUserById(@PathVariable String uId) {
-		return userRepository.findByUId(uId).orElse(null);
+	public ResponseEntity<User> getUserById(@PathVariable String uId) {
+		Optional<User> user = userRepository.findByUId(uId);
+		if (user.isPresent()) {
+			return ResponseEntity.ok(user.get());
+		} else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 
 	@GetMapping("/{id}/hobbies")
