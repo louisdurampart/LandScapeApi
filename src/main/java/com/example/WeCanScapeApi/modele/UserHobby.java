@@ -10,9 +10,6 @@ import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
 
-// Import des classes User et Hobby
-import com.example.WeCanScapeApi.modele.User;
-import com.example.WeCanScapeApi.modele.Hobby;
 @Entity
 @Table(name = "UserHobby")
 @Getter
@@ -29,4 +26,30 @@ public class UserHobby {
     @ManyToOne
     @JoinColumn(name = "id_hobby")
     private Hobby hobby;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Hobby getHobby() {
+		return hobby;
+	}
+
+	public void setHobby(Hobby hobby) {
+		this.hobby = hobby;
+	}
+    
+    
 }

@@ -1,5 +1,7 @@
 package com.example.WeCanScapeApi.modele;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,18 +21,44 @@ public class Hobby {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  private String libelle;
+  private String label;
 
   @ManyToOne
   @JoinColumn(name = "id_category")
+  @JsonBackReference
   private Category category;
 
   public Hobby() {
     // Constructeur par défaut
   }
 
-  public Hobby(String libelle, Category category) {
-    this.libelle = libelle;
+  public Hobby(String label, Category category) {
+    this.label = label;
     this.category = category;
   }
+
+  public Integer getId() {
+    return id;
+  }
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+  public String getLabel() {
+    return label;
+  }
+
+  public void setLabel(String label) {
+    this.label = label;
+  }
+
+  public Category getCategory() {
+    return category;
+  }
+
+  public void setCategory(Category category) {
+    this.category = category;
+  }
+
 }

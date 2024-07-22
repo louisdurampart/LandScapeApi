@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/histories")
+@RequestMapping("/api/histories")
 public class HistoryController {
 
     @Autowired
@@ -43,10 +43,10 @@ public class HistoryController {
             History historyToUpdate = history.get();
             historyToUpdate.setUser(historyDetails.getUser());
             historyToUpdate.setDate(historyDetails.getDate());
-            historyToUpdate.setLatitude_depart(historyDetails.getLatitude_depart());
-            historyToUpdate.setLatitude_arrive(historyDetails.getLatitude_arrive());
-            historyToUpdate.setLongitude_depart(historyDetails.getLongitude_depart());
-            historyToUpdate.setLongitude_arrive(historyDetails.getLongitude_arrive());
+            historyToUpdate.setLaStart(historyDetails.getLaStart());
+            historyToUpdate.setLaEnd(historyDetails.getLaEnd());
+            historyToUpdate.setLoStart(historyDetails.getLoStart());
+            historyToUpdate.setLoEnd(historyDetails.getLoEnd());
             historyToUpdate.setWaypoints(historyDetails.getWaypoints());
             History updatedHistory = historyRepository.save(historyToUpdate);
             return ResponseEntity.ok(updatedHistory);

@@ -27,27 +27,24 @@ public class CategoryConfig {
 
             // Créer de nouvelles catégories
             List<Category> categories = Arrays.asList(
-                    new Category("Sports"),
-                    new Category("Musique"),
-                    new Category("Art"),
-                    new Category("Restauration"),
-                    new Category("Musées"),
-                    new Category("Hébergement"),
-                    new Category("Randonnée"),
-                    new Category("Culturel"),
-                    new Category("Aventure"),
-                    new Category("Activités familiales"),
-                    new Category("Activités aquatiques"),
-                    new Category("Transport"),
-                    new Category("Santé"),
-                    new Category("Éducation"),
-                    new Category("Shopping"),
-                    new Category("Banques et guichets automatiques"),
-                    new Category("Services publics"),
-                    new Category("Loisirs"),
-                    new Category("Nature et parcs"),
-                    new Category("Hôtels"),
-                    new Category("Stations-service")
+                    new Category("Sports", "bike"),
+                    new Category("Musique", "music"),
+                    new Category("Art", "palette"),
+                    new Category("Restauration", "silverware-fork-knife"),
+                    new Category("Musées", "bank-outline"),
+                    new Category("Hébergement", "home-group"),
+                    new Category("Randonnée", "hiking"),
+                    new Category("Culturel", "party-popper"),
+                    new Category("Aventure", "parachute"),
+                    new Category("Activités familiales", "human-male-child"),
+                    new Category("Activités aquatiques", "diving-flippers"),
+                    new Category("Transport", "train"),
+                    new Category("Santé", "hospital-building"),
+                    new Category("Shopping", "shopping"),
+                    new Category("Loisirs", "ticket"),
+                    new Category("Nature et parcs", "pine-tree"),
+                    new Category("Hôtels", "bed"),
+                    new Category("Stations-service", "gas-station")
             );
 
             // Vérifier et enregistrer les nouvelles catégories

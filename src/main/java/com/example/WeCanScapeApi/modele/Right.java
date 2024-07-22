@@ -17,4 +17,25 @@ public class Right {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String label;
+    
+    public Right() {}
+    
+    public Right(String label) {
+    	this.label = label;
+    }
+    
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getLabel() {
+		return label;
+	}
+	public void setLabel(String label) {
+		this.label = label;
+	}
+    
+    
 }

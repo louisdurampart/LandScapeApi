@@ -9,5 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface HobbyRepository extends JpaRepository<Hobby, Integer> {
-    Optional<Hobby> findByLibelleAndCategory(String libelle, Category category);
+    Optional<Hobby> findByLabelAndCategory(String libelle, Category category);
 }
