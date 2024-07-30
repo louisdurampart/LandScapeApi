@@ -13,11 +13,12 @@ import jakarta.persistence.Table;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "\"User\"") // Utilisation de guillemets doubles pour échapper le nom réservé dans
-							// PostgreSQL
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})							// PostgreSQL
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
