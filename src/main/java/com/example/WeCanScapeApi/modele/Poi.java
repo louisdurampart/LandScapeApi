@@ -1,5 +1,7 @@
 package com.example.WeCanScapeApi.modele;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
@@ -12,28 +14,28 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "Commerce")
+@Table(name = "Poi")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Commerce {
+public class Poi {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private String adresse;
-    private String photo;
+    private String address;
+    private List<String> picture;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "entreprise_id")
-    private Entreprise entreprise;
+    @JoinColumn(name = "company_id")
+    private Company company;
 
-    public Commerce() {
+    public Poi() {
     }
 
-    public Commerce(String name, String adresse, String photo, Entreprise entreprise) {
+    public Poi(String name, String address, List<String> picture, Company company) {
         this.name = name;
-        this.adresse = adresse;
-        this.photo = photo;
-        this.entreprise = entreprise;
+        this.address = address;
+        this.picture = picture;
+        this.company = company;
     }
 
     // Getters and Setters
@@ -54,27 +56,27 @@ public class Commerce {
         this.name = name;
     }
 
-    public String getAdresse() {
-        return adresse;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
-    public String getPhoto() {
-        return photo;
+    public List<String> getPicture() {
+        return picture;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setPicture(List<String> picture) {
+        this.picture = picture;
     }
 
-    public Entreprise getEntreprise() {
-        return entreprise;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setEntreprise(Entreprise entreprise) {
-        this.entreprise = entreprise;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }

@@ -15,32 +15,32 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "Entreprise")
+@Table(name = "Company")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Entreprise {
+public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String nom;
-    private String siegeSocial;
+    private String name;
+    private String headOffice;
     private String siret;
-    private String photos;
+    private String picture;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "entreprise", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Commerce> commerces;
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Poi> pois;
 
-    public Entreprise() {
+    public Company() {
     }
 
-    public Entreprise(String nom, String siegeSocial, String siret, String photos, User user) {
-        this.nom = nom;
-        this.siegeSocial = siegeSocial;
+    public Company(String name, String headOffice, String siret, String picture, User user) {
+        this.name = name;
+        this.headOffice = headOffice;
         this.siret = siret;
-        this.photos = photos;
+        this.picture = picture;
         this.user = user;
     }
 
@@ -54,20 +54,20 @@ public class Entreprise {
         this.id = id;
     }
 
-    public String getNom() {
-        return nom;
+    public String getName() {
+        return name;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getSiegeSocial() {
-        return siegeSocial;
+    public String getHeadOffice() {
+        return headOffice;
     }
 
-    public void setSiegeSocial(String siegeSocial) {
-        this.siegeSocial = siegeSocial;
+    public void setHeadOffice(String headOffice) {
+        this.headOffice = headOffice;
     }
 
     public String getSiret() {
@@ -78,12 +78,12 @@ public class Entreprise {
         this.siret = siret;
     }
 
-    public String getPhotos() {
-        return photos;
+    public String getPicture() {
+        return picture;
     }
 
-    public void setPhotos(String photos) {
-        this.photos = photos;
+    public void setPicture(String picture) {
+        this.picture = picture;
     }
 
     public User getUser() {
@@ -94,11 +94,11 @@ public class Entreprise {
         this.user = user;
     }
 
-    public List<Commerce> getCommerces() {
-        return commerces;
+    public List<Poi> getPoi() {
+        return pois;
     }
 
-    public void setCommerces(List<Commerce> commerces) {
-        this.commerces = commerces;
+    public void setPoi(List<Poi> pois) {
+        this.pois = pois;
     }
 }
