@@ -1,6 +1,7 @@
 package com.example.WeCanScapeApi.modele;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,13 +10,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "Hobby")
-@Getter
-@Setter
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Hobby {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

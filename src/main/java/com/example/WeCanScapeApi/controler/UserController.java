@@ -79,18 +79,6 @@ public class UserController {
 		}
 	}
 
-	@PutMapping("/{id}")
-	public User updateUser(@PathVariable Integer id, @RequestBody User user) {
-		user.setId(id);
-		return userRepository.save(user);
-	}
-
-	@DeleteMapping("/{id}")
-	public void deleteUser(@PathVariable Integer id) {
-		System.out.println(id);
-		userRepository.deleteById(id);
-	}
-
 	@DeleteMapping("/hobbies/{userId}/{hobbyId}")
 	public ResponseEntity<?> deleteUserHobby(@PathVariable Integer userId,
 			@PathVariable Integer hobbyId) {
@@ -103,4 +91,18 @@ public class UserController {
 					.body(new ApiResponse<>(false, "Échec de la suppression de la liaison utilisateur-hobby.", null));
 		}
 	}
+
+	@PutMapping("/{id}")
+	public User updateUser(@PathVariable Integer id, @RequestBody User user) {
+		user.setId(id);
+		return userRepository.save(user);
+	}
+
+	@DeleteMapping("/{id}")
+	public void deleteUser(@PathVariable Integer id) {
+		System.out.println(id);
+		userRepository.deleteById(id);
+	}
+
+	
 }

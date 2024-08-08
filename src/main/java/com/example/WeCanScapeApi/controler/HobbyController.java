@@ -1,7 +1,14 @@
 package com.example.WeCanScapeApi.controler;
 
+import com.example.WeCanScapeApi.DTO.GetHobbyDTO;
+import com.example.WeCanScapeApi.DTO.HobbyDTO;
 import com.example.WeCanScapeApi.modele.Hobby;
+import com.example.WeCanScapeApi.modele.ApiResponse;
+import com.example.WeCanScapeApi.modele.Category;
+import com.example.WeCanScapeApi.repository.CategoryRepository;
 import com.example.WeCanScapeApi.repository.HobbyRepository;
+import com.example.WeCanScapeApi.service.HobbyService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +23,15 @@ public class HobbyController {
     @Autowired
     private HobbyRepository hobbyRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private HobbyService hobbyService;
+
     @GetMapping
-    public List<Hobby> getAllHobbies() {
-        return hobbyRepository.findAll();
+    public List<GetHobbyDTO> getAllHobbies() {
+        return hobbyService.findAllHobbies();
     }
 
     @GetMapping("/{id}")
@@ -32,8 +45,21 @@ public class HobbyController {
     }
 
     @PostMapping
-    public Hobby createHobby(@RequestBody Hobby hobby) {
-        return hobbyRepository.save(hobby);
+    public ResponseEntity<ApiResponse<HobbyDTO>> createHobby(@RequestBody HobbyDTO hobbyDTO) {
+        try {
+            Category category = categoryRepository.findById(hobbyDTO.getCategoryId())
+                    .orElseThrow(() -> new RuntimeException("Category not found"));
+
+            Hobby hobby = new Hobby();
+            hobby.setLabel(hobbyDTO.getLabel());
+            hobby.setCategory(category);
+
+            hobbyRepository.save(hobby);
+            return ResponseEntity.ok(new ApiResponse<>(true, "Hobby créé avec succès.", null));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(false, "Échec de la création du hobby. " + e.getMessage(), null));
+        }
     }
 
     @PutMapping("/{id}")
