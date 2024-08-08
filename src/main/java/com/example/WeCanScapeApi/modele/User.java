@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "\"User\"") // Utilisation de guillemets doubles pour échapper le nom réservé dans
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})							// PostgreSQL
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" }) // PostgreSQL
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +35,10 @@ public class User {
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonManagedReference
 	private List<Notification> notifications;
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonManagedReference
+	private List<Company> companies;
 
 	public User() {
 	}
