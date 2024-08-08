@@ -27,7 +27,6 @@ public class Category {
     @JsonManagedReference
     private List<Hobby> hobbies;
 
-
     // Constructeur par défaut
     public Category() {
     }
