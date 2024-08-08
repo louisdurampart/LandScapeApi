@@ -21,17 +21,15 @@ public class CompanyController {
     private UserRepository userRepository;
 
     @GetMapping
-    public List<Company> getAllCompanys() {
+    public List<Company> getAllCompanies() {
         return companyRepository.findAll();
     }
-    //création de user et d'company
+
     @PostMapping("/createWithUser")
     public ResponseEntity<Company> createCompanyWithUser(@RequestBody CreateUserAndCompanyDTO dto) {
-        // Créer et sauvegarder l'utilisateur
         User user = dto.getUser();
         user = userRepository.save(user);
 
-        // Créer et sauvegarder l'company, en associant l'utilisateur
         Company company = dto.getCompany();
         company.setUser(user);
         company = companyRepository.save(company);
@@ -46,6 +44,13 @@ public class CompanyController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Company> getCompanyByUserId(@PathVariable Integer userId) {
+        Optional<Company> company = companyRepository.findByUserId(userId);
+        return company.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
     @PostMapping
     public Company createCompany(@RequestBody Company company) {
         return companyRepository.save(company);
@@ -53,7 +58,7 @@ public class CompanyController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Company> updateCompany(@PathVariable Integer id,
-            @RequestBody Company companyDetails) {
+                                                 @RequestBody Company companyDetails) {
         Optional<Company> company = companyRepository.findById(id);
         if (company.isPresent()) {
             Company companyToUpdate = company.get();

@@ -1,5 +1,9 @@
 package com.example.WeCanScapeApi.modele;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,11 +16,10 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 @Entity
 @Table(name = "Company")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -94,11 +97,11 @@ public class Company {
         this.user = user;
     }
 
-    public List<Poi> getPoi() {
+    public List<Poi> getPois() {
         return pois;
     }
 
-    public void setPoi(List<Poi> pois) {
+    public void setPois(List<Poi> pois) {
         this.pois = pois;
     }
 }
