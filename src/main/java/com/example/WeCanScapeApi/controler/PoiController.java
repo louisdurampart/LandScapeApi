@@ -12,6 +12,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/poi")
 public class PoiController {
+
     @Autowired
     private PoiRepository poiRepository;
 
@@ -33,8 +34,17 @@ public class PoiController {
     }
 
     @PostMapping
-    public Poi createPoi(@RequestBody Poi poi) {
-        return poiRepository.save(poi);
+    public ResponseEntity<Poi> createPoi(@RequestBody Poi poi) {
+        try {
+            // Vérification ou transformation des données JSON si nécessaire
+            String picturesJson = poi.getPictures();
+            // On peut faire des validations ou transformations sur picturesJson ici si nécessaire
+            poi.setPictures(picturesJson); // Assurez-vous que les données sont correctement formatées
+            Poi createdPoi = poiRepository.save(poi);
+            return ResponseEntity.ok(createdPoi);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build(); // Gérer les erreurs en fonction des besoins
+        }
     }
 
     @PutMapping("/{id}")
@@ -44,7 +54,7 @@ public class PoiController {
             Poi poiToUpdate = poi.get();
             poiToUpdate.setName(poiDetails.getName());
             poiToUpdate.setAddress(poiDetails.getAddress());
-            poiToUpdate.setPicture(poiDetails.getPicture());
+            poiToUpdate.setPictures(poiDetails.getPictures()); // Mise à jour avec la chaîne JSON
             poiToUpdate.setCompany(poiDetails.getCompany());
             Poi updatedPoi = poiRepository.save(poiToUpdate);
             return ResponseEntity.ok(updatedPoi);
