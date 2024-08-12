@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,9 +26,8 @@ public class Poi {
     private String name;
     private String address;
 
-    // Stocke les images en tant que chaîne JSON
-    @Column(columnDefinition = "json")
-    private String pictures;
+    @ElementCollection
+    private List<String> picture;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
@@ -38,14 +36,14 @@ public class Poi {
     public Poi() {
     }
 
-    public Poi(String name, String address, String pictures, Company company) {
+    public Poi(String name, String address, List<String> picture, Company company) {
         this.name = name;
         this.address = address;
-        this.pictures = pictures; // Stockage JSON en tant que chaîne
+        this.picture = picture;
         this.company = company;
     }
 
-    // Getters et Setters
+    // Getters and Setters
 
     public Integer getId() {
         return id;
@@ -71,12 +69,12 @@ public class Poi {
         this.address = address;
     }
 
-    public String getPictures() {
-        return pictures;
+    public List<String> getPicture() {
+        return picture;
     }
 
-    public void setPictures(String pictures) {
-        this.pictures = pictures;
+    public void setPicture(List<String> picture) {
+        this.picture = picture;
     }
 
     public Company getCompany() {

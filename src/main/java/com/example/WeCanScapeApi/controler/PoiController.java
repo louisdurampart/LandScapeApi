@@ -1,5 +1,6 @@
 package com.example.WeCanScapeApi.controler;
 
+import com.example.WeCanScapeApi.modele.ApiResponse;
 import com.example.WeCanScapeApi.modele.Poi;
 import com.example.WeCanScapeApi.repository.PoiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/poi")
 public class PoiController {
-
     @Autowired
     private PoiRepository poiRepository;
 
@@ -34,17 +34,8 @@ public class PoiController {
     }
 
     @PostMapping
-    public ResponseEntity<Poi> createPoi(@RequestBody Poi poi) {
-        try {
-            // Vérification ou transformation des données JSON si nécessaire
-            String picturesJson = poi.getPictures();
-            // On peut faire des validations ou transformations sur picturesJson ici si nécessaire
-            poi.setPictures(picturesJson); // Assurez-vous que les données sont correctement formatées
-            Poi createdPoi = poiRepository.save(poi);
-            return ResponseEntity.ok(createdPoi);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build(); // Gérer les erreurs en fonction des besoins
-        }
+    public Poi createPoi(@RequestBody Poi poi) {
+        return poiRepository.save(poi);
     }
 
     @PutMapping("/{id}")
@@ -54,7 +45,7 @@ public class PoiController {
             Poi poiToUpdate = poi.get();
             poiToUpdate.setName(poiDetails.getName());
             poiToUpdate.setAddress(poiDetails.getAddress());
-            poiToUpdate.setPictures(poiDetails.getPictures()); // Mise à jour avec la chaîne JSON
+            poiToUpdate.setPicture(poiDetails.getPicture());
             poiToUpdate.setCompany(poiDetails.getCompany());
             Poi updatedPoi = poiRepository.save(poiToUpdate);
             return ResponseEntity.ok(updatedPoi);
@@ -64,13 +55,18 @@ public class PoiController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePoi(@PathVariable Integer id) {
+    public ResponseEntity<?> deletePoi(@PathVariable Integer id) {
+        System.out.println("Delete request received for POI with id: " + id);
+
         Optional<Poi> poi = poiRepository.findById(id);
+
         if (poi.isPresent()) {
             poiRepository.delete(poi.get());
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.ok(new ApiResponse<>(true, "POI supprimé avec succès.", null));
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(false, "Échec de la suppression : POI non trouvé.", null));
         }
     }
+
 }
