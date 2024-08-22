@@ -27,6 +27,7 @@ public class User {
 	private String firstName;
 	private Date birthdate;
 	private String uId;
+	private Boolean isSub;
 
 	@ManyToOne
 	@JoinColumn(name = "id_right")
@@ -43,12 +44,13 @@ public class User {
 	public User() {
 	}
 
-	public User(String name, String firstName, Date birthdate, String uId, Right right) {
+	public User(String name, String firstName, Date birthdate, String uId, boolean isSub, Right right) {
 		super();
 		this.name = name;
 		this.firstName = firstName;
 		this.birthdate = birthdate;
 		this.uId = uId;
+		this.isSub = isSub;
 		this.right = right;
 	}
 
@@ -107,5 +109,21 @@ public class User {
 	public void setNotifications(List<Notification> notifications) {
 		this.notifications = notifications;
 	}
+
+    public boolean isIsSub() {
+        return isSub;
+    }
+	
+    public void setIsSub(boolean isSub) {
+        this.isSub = isSub;
+    }
+
+    public List<Company> getCompanies() {
+        return companies;
+    }
+
+    public void setCompanies(List<Company> companies) {
+        this.companies = companies;
+    }
 
 }

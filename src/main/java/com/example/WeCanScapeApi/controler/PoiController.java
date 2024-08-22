@@ -1,7 +1,15 @@
 package com.example.WeCanScapeApi.controler;
 
+import com.example.WeCanScapeApi.DTO.HobbyDTO;
+import com.example.WeCanScapeApi.DTO.LocationRequest;
+import com.example.WeCanScapeApi.DTO.PoiDTO;
 import com.example.WeCanScapeApi.modele.ApiResponse;
+import com.example.WeCanScapeApi.modele.Category;
+import com.example.WeCanScapeApi.modele.Company;
+import com.example.WeCanScapeApi.modele.Hobby;
 import com.example.WeCanScapeApi.modele.Poi;
+import com.example.WeCanScapeApi.repository.CategoryRepository;
+import com.example.WeCanScapeApi.repository.CompanyRepository;
 import com.example.WeCanScapeApi.repository.PoiRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +23,12 @@ import java.util.Optional;
 public class PoiController {
     @Autowired
     private PoiRepository poiRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private CompanyRepository companyRepository;
 
     @GetMapping
     public List<Poi> getAllPois() {
@@ -34,8 +48,29 @@ public class PoiController {
     }
 
     @PostMapping
-    public Poi createPoi(@RequestBody Poi poi) {
-        return poiRepository.save(poi);
+    public ResponseEntity<ApiResponse<PoiDTO>> createHobby(@RequestBody PoiDTO poiDTO) {
+        try {
+            Category category = categoryRepository.findById(poiDTO.getCategoryId())
+                    .orElseThrow(() -> new RuntimeException("Category not found"));
+
+            Company company = companyRepository.findById(poiDTO.getCompanyId())
+                    .orElseThrow(() -> new RuntimeException("Company not found"));
+
+            Poi poi = new Poi();
+            poi.setAddress(poiDTO.getAddress());
+            poi.setName(poiDTO.getName());
+            poi.setDescription(poiDTO.getDescription());
+            poi.setLat(poiDTO.getLat());
+            poi.setLon(poiDTO.getLon());
+            poi.setCategory(category);
+            poi.setCompany(company);
+
+            poiRepository.save(poi);
+            return ResponseEntity.ok(new ApiResponse<>(true, "Commerce créé avec succès.", null));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(false, "Échec de la création du commerce. " + e.getMessage(), null));
+        }
     }
 
     @PutMapping("/{id}")
@@ -45,7 +80,6 @@ public class PoiController {
             Poi poiToUpdate = poi.get();
             poiToUpdate.setName(poiDetails.getName());
             poiToUpdate.setAddress(poiDetails.getAddress());
-            poiToUpdate.setPicture(poiDetails.getPicture());
             poiToUpdate.setCompany(poiDetails.getCompany());
             Poi updatedPoi = poiRepository.save(poiToUpdate);
             return ResponseEntity.ok(updatedPoi);
@@ -67,6 +101,16 @@ public class PoiController {
             return ResponseEntity.badRequest()
                     .body(new ApiResponse<>(false, "Échec de la suppression : POI non trouvé.", null));
         }
+    }
+
+    @GetMapping("/within-radius")
+    public ResponseEntity<List<Poi>> getPoisWithinRadius(
+            @RequestParam double latitude,
+            @RequestParam double longitude,
+            @RequestParam(defaultValue = "1.0") double radius) {
+
+        List<Poi> pois = poiRepository.findPoisWithinRadius(latitude, longitude, radius);
+        return ResponseEntity.ok(pois);
     }
 
 }

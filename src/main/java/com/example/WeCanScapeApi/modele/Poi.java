@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Poi")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Poi {
     @Id
@@ -25,9 +26,18 @@ public class Poi {
     private Integer id;
     private String name;
     private String address;
+    
+    @Column(columnDefinition = "TEXT")
+    private String description;
+    private String lat;
+    private String lon;
 
     @ElementCollection
     private List<String> picture;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
@@ -36,14 +46,16 @@ public class Poi {
     public Poi() {
     }
 
-    public Poi(String name, String address, List<String> picture, Company company) {
+    public Poi(String name, String address, Company company, Category category, String description, String lat,
+            String lon) {
         this.name = name;
         this.address = address;
-        this.picture = picture;
+        this.description = description;
         this.company = company;
+        this.category = category;
+        this.lat = lat;
+        this.lon = lon;
     }
-
-    // Getters and Setters
 
     public Integer getId() {
         return id;
@@ -84,4 +96,43 @@ public class Poi {
     public void setCompany(Company company) {
         this.company = company;
     }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLon() {
+        return lon;
+    }
+
+    public void setLon(String lon) {
+        this.lon = lon;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    /**
+     * @return String return the description
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description the description to set
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 }

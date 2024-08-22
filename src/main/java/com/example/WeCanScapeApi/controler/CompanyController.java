@@ -1,6 +1,8 @@
 package com.example.WeCanScapeApi.controler;
 
 import com.example.WeCanScapeApi.DTO.CreateUserAndCompanyDTO;
+import com.example.WeCanScapeApi.DTO.PoiDTO;
+import com.example.WeCanScapeApi.modele.ApiResponse;
 import com.example.WeCanScapeApi.modele.Company;
 import com.example.WeCanScapeApi.repository.CompanyRepository;
 import com.example.WeCanScapeApi.repository.UserRepository;
@@ -52,18 +54,23 @@ public class CompanyController {
     }
 
     @PostMapping
-    public Company createCompany(@RequestBody Company company) {
-        return companyRepository.save(company);
+    public ResponseEntity<ApiResponse<PoiDTO>> createCompany(@RequestBody Company company) {
+        try {
+            companyRepository.save(company);
+            return ResponseEntity.ok(new ApiResponse<>(true, "Entreprise créée avec succès.", null));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(false, "Échec de la création de l'entreprise. " + e.getMessage(), null));
+        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Company> updateCompany(@PathVariable Integer id,
-                                                 @RequestBody Company companyDetails) {
+            @RequestBody Company companyDetails) {
         Optional<Company> company = companyRepository.findById(id);
         if (company.isPresent()) {
             Company companyToUpdate = company.get();
             companyToUpdate.setName(companyDetails.getName());
-            companyToUpdate.setHeadOffice(companyDetails.getHeadOffice());
             companyToUpdate.setSiret(companyDetails.getSiret());
             companyToUpdate.setPicture(companyDetails.getPicture());
             companyToUpdate.setUser(companyDetails.getUser());

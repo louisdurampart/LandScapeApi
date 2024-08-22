@@ -26,7 +26,6 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private String headOffice;
     private String siret;
     private String picture;
 
@@ -41,9 +40,8 @@ public class Company {
     public Company() {
     }
 
-    public Company(String name, String headOffice, String siret, String picture, User user) {
+    public Company(String name, String siret, String picture, User user) {
         this.name = name;
-        this.headOffice = headOffice;
         this.siret = siret;
         this.picture = picture;
         this.user = user;
@@ -65,14 +63,6 @@ public class Company {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getHeadOffice() {
-        return headOffice;
-    }
-
-    public void setHeadOffice(String headOffice) {
-        this.headOffice = headOffice;
     }
 
     public String getSiret() {
