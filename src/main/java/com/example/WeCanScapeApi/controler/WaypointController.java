@@ -2,8 +2,11 @@ package com.example.WeCanScapeApi.controler;
 
 import com.example.WeCanScapeApi.modele.Waypoint;
 import com.example.WeCanScapeApi.repository.WaypointRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,34 +15,49 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/waypoints")
+@Tag(name = "Waypoints", description = "Gestion des waypoints")
 public class WaypointController {
 
     @Autowired
     private WaypointRepository waypointRepository;
 
-    // Get all waypoints
+    @Operation(summary = "Récupérer tous les waypoints")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Liste de tous les waypoints récupérée avec succès")
+    })
     @GetMapping
     public ResponseEntity<List<Waypoint>> getAllWaypoints() {
         List<Waypoint> waypoints = waypointRepository.findAll();
-        return new ResponseEntity<>(waypoints, HttpStatus.OK);
+        return ResponseEntity.ok(waypoints);
     }
 
-    // Get waypoint by id
+    @Operation(summary = "Récupérer un waypoint par son ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Waypoint récupéré avec succès"),
+            @ApiResponse(responseCode = "404", description = "Waypoint non trouvé")
+    })
     @GetMapping("/{id}")
     public ResponseEntity<Waypoint> getWaypointById(@PathVariable Integer id) {
         Optional<Waypoint> waypoint = waypointRepository.findById(id);
-        return waypoint.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return waypoint.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Create a new waypoint
+    @Operation(summary = "Créer un nouveau waypoint")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Waypoint créé avec succès")
+    })
     @PostMapping
     public ResponseEntity<Waypoint> createWaypoint(@RequestBody Waypoint waypoint) {
         Waypoint createdWaypoint = waypointRepository.save(waypoint);
-        return new ResponseEntity<>(createdWaypoint, HttpStatus.CREATED);
+        return ResponseEntity.status(201).body(createdWaypoint);
     }
 
-    // Update a waypoint
+    @Operation(summary = "Mettre à jour un waypoint")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Waypoint mis à jour avec succès"),
+            @ApiResponse(responseCode = "404", description = "Waypoint non trouvé")
+    })
     @PutMapping("/{id}")
     public ResponseEntity<Waypoint> updateWaypoint(@PathVariable Integer id, @RequestBody Waypoint waypointDetails) {
         Optional<Waypoint> waypoint = waypointRepository.findById(id);
@@ -50,21 +68,25 @@ public class WaypointController {
             updatedWaypoint.setLo(waypointDetails.getLo());
             updatedWaypoint.setHistory(waypointDetails.getHistory());
             waypointRepository.save(updatedWaypoint);
-            return new ResponseEntity<>(updatedWaypoint, HttpStatus.OK);
+            return ResponseEntity.ok(updatedWaypoint);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 
-    // Delete a waypoint
+    @Operation(summary = "Supprimer un waypoint")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Waypoint supprimé avec succès"),
+            @ApiResponse(responseCode = "404", description = "Waypoint non trouvé")
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteWaypoint(@PathVariable Integer id) {
         Optional<Waypoint> waypoint = waypointRepository.findById(id);
         if (waypoint.isPresent()) {
             waypointRepository.delete(waypoint.get());
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return ResponseEntity.noContent().build();
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.notFound().build();
         }
     }
 }

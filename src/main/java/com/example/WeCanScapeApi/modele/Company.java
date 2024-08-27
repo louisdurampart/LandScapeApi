@@ -27,7 +27,6 @@ public class Company {
     private Integer id;
     private String name;
     private String siret;
-    private String picture;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -40,10 +39,9 @@ public class Company {
     public Company() {
     }
 
-    public Company(String name, String siret, String picture, User user) {
+    public Company(String name, String siret, User user) {
         this.name = name;
         this.siret = siret;
-        this.picture = picture;
         this.user = user;
     }
 
@@ -71,14 +69,6 @@ public class Company {
 
     public void setSiret(String siret) {
         this.siret = siret;
-    }
-
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
     }
 
     public User getUser() {

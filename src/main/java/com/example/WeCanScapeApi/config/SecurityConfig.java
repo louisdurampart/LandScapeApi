@@ -48,47 +48,4 @@ public class SecurityConfig implements WebMvcConfigurer {
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
-	/*
-	 * @Bean
-	 * public SecurityFilterChain securityFilterChain(HttpSecurity http) throws
-	 * Exception {
-	 * http
-	 * .cors(withDefaults()) // Enable CORS with default settings
-	 * .authorizeHttpRequests(authorize -> authorize
-	 * .requestMatchers("/**").permitAll() // Allow preflight requests
-	 * .anyRequest().permitAll() // Allow all other requests without authentication
-	 * );
-	 * return http.build();
-	 * }
-	 * 
-	 * @Bean
-	 * public WebMvcConfigurer corsConfig() {
-	 * return new WebMvcConfigurer() {
-	 * 
-	 * @Override
-	 * public void addCorsMappings(CorsRegistry registry) {
-	 * registry.addMapping("/**")
-	 * .allowedOrigins("*")
-	 * .allowedMethods("*")
-	 * .allowedHeaders("*");
-	 * System.out.println("CORS configuration applied");
-	 * }
-	 * };
-	 * }
-	 * 
-	 * @Bean
-	 * public UserDetailsService userDetailsService() {
-	 * InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-	 * manager.createUser(
-	 * User.withUsername("admin").password(passwordEncoder().encode("admin")).roles(
-	 * "USER").build());
-	 * return manager;
-	 * }
-	 * 
-	 * @Bean
-	 * public PasswordEncoder passwordEncoder() {
-	 * return new BCryptPasswordEncoder();
-	 * }
-	 */
 }

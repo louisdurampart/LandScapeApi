@@ -1,11 +1,11 @@
 package com.example.WeCanScapeApi.modele;
 
-public class ApiResponse<T> {
+public class ApiResult<T> {
     private boolean success;
     private String message;
     private T data;
 
-    public ApiResponse(boolean success, String message, T data) {
+    public ApiResult(boolean success, String message, T data) {
         this.success = success;
         this.message = message;
         this.data = data;
